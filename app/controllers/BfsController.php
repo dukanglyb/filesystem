@@ -51,7 +51,7 @@ class BfsController extends FileControllerBase
         if($customname){
             $filename =$customname;
         }else{
-            $filename = Phalcon\Text::random(\Phalcon\Text::RANDOM_ALNUM, 32);
+            $filename = Phalcon\Text::random(\Phalcon\Text::RANDOM_ALNUM, 32);//随机数可为16 24 32
 //            $filename = date('Ymdhis');
         }
         $fileNameWithOutExt = $filename;
