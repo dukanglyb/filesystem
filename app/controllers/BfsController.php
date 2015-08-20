@@ -51,8 +51,8 @@ class BfsController extends FileControllerBase
         if($customname){
             $filename =$customname;
         }else{
-            $filename = Phalcon\Text::random(\Phalcon\Text::RANDOM_ALNUM, 32);//随机数可为16 24 32
-//            $filename = date('Ymdhis');
+//            $filename = Phalcon\Text::random(\Phalcon\Text::RANDOM_ALNUM, 32);//随机数可为16 24 32
+            $filename = strtotime(date('H:i:s'));
         }
         $fileNameWithOutExt = $filename;
         //加入扩展名
@@ -103,14 +103,16 @@ class BfsController extends FileControllerBase
 
     /**
      * 获取文件
-     * @Route("/{filename}", methods={"GET"}, name="fileget")
+     * @Route("/filePath={filePath}/fileName={fileName}", methods={"GET"}, name="fileget")
+     * @param $filePath
      * @param $fileName
      * @return \Phalcon\HTTP\ResponseInterface|string
      */
-    public function  filegetAction($fileName)
+    public function  filegetAction($filePath,$fileName)
     {
         $errorMessage = array();
-        $fileName = $_SERVER['DOCUMENT_ROOT'] .'/'.$this->getFilePath(). $fileName;
+//        $fileName = $_SERVER['DOCUMENT_ROOT'] .'/'.$this->getFilePath(). $fileName;
+        $fileName = $_SERVER['DOCUMENT_ROOT'] .'/files/'.$filePath.'/'. $fileName;
         //中文名特殊处理
         $fileName = iconv( 'UTF-8', 'GB18030', $fileName );
         if (is_file($fileName)) {
@@ -131,14 +133,16 @@ class BfsController extends FileControllerBase
 
     /**
      * 删除文件
-     * @Route("/", methods={"DELETE"}, name="filedelete")
+     * @Route("/{filePath}/{fileName}", methods={"DELETE"}, name="filedelete")
+     * @param $filePath
      * @param $fileName
      * @return string
      */
-    public function  filedeleteAction($fileName)
+    public function  filedeleteAction($filePath,$fileName)
     {
         $errorMessage = array();
-        $fileName = $_SERVER['DOCUMENT_ROOT'] .'/'.$this->getFilePath(). $fileName;
+//        $fileName = $_SERVER['DOCUMENT_ROOT'] .'/'.$this->getFilePath(). $fileName;
+        $fileName = $_SERVER['DOCUMENT_ROOT'] .'/files/'.$filePath.'/'. $fileName;
         $fileName = iconv( 'UTF-8', 'GB18030', $fileName );
         if (is_file($fileName)) {
             return json_encode(
