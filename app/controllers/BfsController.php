@@ -103,7 +103,7 @@ class BfsController extends FileControllerBase
 
     /**
      * 获取文件
-     * @Route("/filePath=/fileName", methods={"GET"}, name="fileget")
+     * @Route("/filePath/fileName", methods={"GET"}, name="fileget")
      * @param $filePath
      * @param $fileName
      * @return \Phalcon\HTTP\ResponseInterface|string
